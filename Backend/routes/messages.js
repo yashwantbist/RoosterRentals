@@ -8,10 +8,10 @@ router.get("/:user1/:user2", async (req, res) => {
   const { user1, user2 } = req.params;
   try {
     const messages = await Message.find({
-      $or: [
-        { sender: user1, receiver: user2 },
-        { sender: user2, receiver: user1 },
-      ],
+       $or: [
+    { sender: new mongoose.Types.ObjectId(user1), receiver: new mongoose.Types.ObjectId(user2) },
+    { sender: new mongoose.Types.ObjectId(user2), receiver: new mongoose.Types.ObjectId(user1) },
+  ],
     }).sort({ timeStamp: 1 });
 
     res.json(messages);
